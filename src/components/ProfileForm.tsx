@@ -44,7 +44,9 @@ export function ProfileForm({ initial, submitLabel, onSubmit }: Props) {
       <fieldset>
         <legend className="mb-1 font-display text-3xl tracking-wide">Gêneros favoritos</legend>
         <p className="mb-4 text-sm text-muted-foreground">Escolha quantos quiser.</p>
-        {error && <p className="text-sm text-destructive">Não foi possível carregar os gêneros.</p>}
+        {error && <p role="alert" className="text-sm text-destructive">Não foi possível carregar os gêneros. Tente novamente.</p>}
+        {isLoading && <p className="mb-3 text-sm text-muted-foreground">Carregando gêneros...</p>}
+        {!isLoading && !error && genres?.length === 0 && <p className="text-sm text-destructive">Nenhum gênero foi retornado. Recarregue a página.</p>}
         <div className="flex flex-wrap gap-2">
           {isLoading && Array.from({ length: 12 }).map((_, i) => <Skeleton key={i} className="h-9 w-24 rounded-full" />)}
           {genres?.map((g) => {

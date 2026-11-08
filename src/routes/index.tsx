@@ -13,6 +13,7 @@ import { durationToRuntimeRange, pickBestGenreMatch, DURATION_LABEL } from "@/li
 import { posterUrl } from "@/lib/storage";
 import { genresQuery } from "@/components/ProfileForm";
 import { PosterImg } from "@/components/PosterImg";
+import { RecommendationBox } from "@/components/RecommendationBox";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -157,6 +158,8 @@ function Index() {
       </section>
 
       <div className="mx-auto max-w-6xl space-y-10 px-4 py-10">
+        <RecommendationBox />
+
         {empty && (
           <Alert>
             <Film className="h-4 w-4" />
