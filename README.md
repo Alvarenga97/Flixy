@@ -2,7 +2,7 @@
 
 > Aquela pergunta de sempre — "o que a gente vai assistir?" — resolvida em um clique.
 
-O **Flixy** sorteia um filme sob medida para você. Você conta quais gêneros gosta e quanto tempo tem para assistir; o app busca no catálogo da TMDB e escolhe um título que combine com o seu gosto — sem repetir o que você já sorteou.
+O **Flixy** sorteia um filme sob medida para você. Você conta quais gêneros gosta e quanto tempo tem para assistir; o app busca na TMDB, limita as opções aos filmes disponíveis no Guia de Conteúdo e escolhe um título que combine com o seu gosto — sem repetir o que você já sorteou. Também é possível descrever livremente o que quer assistir e receber uma recomendação inteligente com a explicação da escolha.
 
 Interface em português (pt-BR), tema escuro de cinema, funciona no navegador, no celular e no computador.
 
@@ -13,8 +13,9 @@ Interface em português (pt-BR), tema escuro de cinema, funciona no navegador, n
 ```text
 1. Perfil        → você escolhe gêneros favoritos e a duração preferida
 2. Sortear       → o app busca na TMDB e escolhe um filme para você
-3. Resultado     → pôster, sinopse, nota, duração, gêneros e link do trailer
-4. Histórico     → tudo que já foi sorteado fica guardado
+3. Resultado     → pôster, sinopse, nota, duração, gêneros, trailer e selo de disponibilidade
+4. Recomendação  → descreva o que quer assistir e receba uma escolha explicada
+5. Histórico     → tudo que já foi sorteado fica guardado
 ```
 
 Na primeira visita, o Flixy abre o **onboarding** para montar seu perfil. Depois disso, a página inicial mostra o botão **"Escolha um filme para mim"** e uma faixa com os últimos sorteados.
@@ -43,6 +44,8 @@ Quando não existe um título com todos os gêneros, o app avisa: *"Não achamos
 ## Funcionalidades
 
 - 🎲 **Sorteio de filmes** com um clique, com pôster, sinopse, nota, duração e trailer no YouTube
+- ✨ **Recomendação inteligente**: descreva o clima, a história ou a companhia e receba um filme disponível com o motivo da escolha
+- ✅ **Selo "Disponível no app"** para títulos encontrados na grade do Guia de Conteúdo
 - 👤 **Perfil** com gêneros favoritos e duração preferida
 - 🔁 **Sem repetição**: o histórico é usado para não sortear o mesmo filme duas vezes
 - 🗂️ **Histórico** de todos os sorteios, com pôster, nota e data
@@ -66,8 +69,10 @@ Quando não existe um título com todos os gêneros, o app avisa: *"Não achamos
 | Componentes | **shadcn/ui** sobre Radix UI |
 | Notificações | **Sonner** |
 | Ícones | **Lucide React** |
-| Autenticação e banco | **Lovable Cloud** (auth + Postgres + Row Level Security) |
+| Autenticação | **Lovable Cloud** |
+| Banco de dados do app | **Neon**, acessado somente pelo servidor |
 | Catálogo de filmes | **TMDB API**, acessada só pelo servidor |
+| Recomendações | **Lovable AI Gateway**, com escolha restrita ao catálogo disponível |
 
 ---
 
@@ -85,6 +90,8 @@ src/
 ├── lib/
 │   ├── sorteio.ts        # regras de escolha, perfis e testes
 │   ├── tmdb.functions.ts # acesso à TMDB (só no servidor)
+│   ├── app-data.functions.ts # perfil e histórico autenticados no Neon
+│   ├── recommendation.functions.ts # recomendação inteligente
 │   └── storage.ts        # perfil e histórico no navegador
 ├── routes/
 │   ├── index.tsx         # / — sortear
